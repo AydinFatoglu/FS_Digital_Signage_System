@@ -11,28 +11,13 @@ if %%a==ServerLayoutDirName set ServerLayoutDirName=%%b
 SET CurrentDir="%~dp0"
 
 
-
 tasklist /nh /fi "imagename eq basewindow.exe" | find /i "basewindow.exe" > nul || (start "" %CurrentDir%basewindow.exe %Splash%)
-
-
-
-
-
-
 
 
 mkdir %LocalDir%
 
  
-
-
-
 ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t %ImageDuration% -q:a 9 -acodec libmp3lame Duration.mp3
-
-
-
-
-
 
 
 
@@ -43,7 +28,6 @@ ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t %ImageDuration% -q:a 9 -acodec
 SET cnt=0
 for %%A in (%LocalDir%\*) do set /a cnt+=1
 if "%cnt%"=="1" (goto singlefile) else (goto multifile)
-
 
 
 
@@ -62,9 +46,7 @@ SET "Splash="
 SET "PlayMode="
 SET "ServerLayoutDirName="
 SET "cnt="
-
-
-
+SET "CurrentDir="
 
 
 goto get
