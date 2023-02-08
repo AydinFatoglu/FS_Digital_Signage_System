@@ -1,1 +1,1 @@
-# FS_Digital_Signage_Player
+# FS Digital Signage Player
