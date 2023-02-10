@@ -1,7 +1,8 @@
-clear
+cls
 :get
 
 @echo off
+Title FS Digital Signage Listener
 echo -----------------------------
 echo Checking Software Updates ...
 echo -----------------------------
@@ -11,12 +12,12 @@ SET APPNAME=FS_Digtal_Signage
 
 
 
-xcopy %1\software\*.* %appdata%\%APPNAME%\ /I /D /S /Y > nul
+xcopy %1\*.* %appdata%\%APPNAME%\ /I /D /S /Y > nul
 
 
 
 
-for /f "tokens=1,2,3,4,5 delims==" %%a in (%appdata%\%APPNAME%\%2.ini) do (
+for /f "tokens=1,2,3,4,5 delims==" %%a in (%appdata%\%APPNAME%\ini\%2.ini) do (
 if %%a==ServerRootDir set ServerRootDir=%%b
 if %%a==LocalDir set LocalDir=%%b
 if %%a==ImageDuration set ImageDuration=%%b
@@ -31,10 +32,10 @@ echo.
 echo -----------------------------
 echo Checking Basewindow ...
 echo -----------------------------
-cd %appdata%\%APPNAME%
+cd %appdata%\%APPNAME%\splash
 tasklist /nh /fi "imagename eq basewindow.exe" | find /i "basewindow.exe" > nul || (start "" basewindow.exe %Splash%)
 
-
+cd %appdata%\%APPNAME%
 
 echo.
 echo -----------------------------
@@ -79,5 +80,9 @@ SET "CurrentDir="
 SET "APPNAME="
 
 
-
+echo.
+echo -----------------------------
+echo Sleeping for 5 seconds ...
+echo -----------------------------
+timeout 5 > nul 
 goto get
