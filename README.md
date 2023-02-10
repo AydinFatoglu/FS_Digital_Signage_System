@@ -8,9 +8,17 @@ Minimal Digital Signage System work with on a file server (samba share)!
 - It plays pulled content locally with predefined durations (images) / Videos will play till the end.
 - It controls software and content updates in every layout cicyle (changes only) So your file server or client not burns :)
 
-# Parameters and Usage
 
-- splah: default background image on client
+ # Usage Example
+
+[space] [Server FQDN or SHARE NAME] [space] [Layout]
+
+# Parameters
+
+<b>Set in ini file<b>
+
 - ServerRootDir: File Server's root media directory
-- Duration: Default image duration
-- 
+- LocalDir: Client local directory all content pull to 
+- ImageDuration: Default image duration (sec)
+- Splash: Default background image on client
+- ServerLayoutDirName: Server folder that contains images/videos
