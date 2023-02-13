@@ -7,15 +7,8 @@ echo -----------------------------
 echo Checking Software Updates ...
 echo -----------------------------
 echo %DATE% - %TIME%
-
 SET APPNAME=FS_Digtal_Signage
-
-
-
 xcopy %1\*.* %appdata%\%APPNAME%\ /I /D /S /Y > nul
-
-
-
 
 for /f "tokens=1,2,3,4,5,6,7 delims==" %%a in (%appdata%\%APPNAME%\ini\%2.ini) do (
 if %%a==ServerRootDir set ServerRootDir=%%b
@@ -27,7 +20,6 @@ if %%a==Weather set Weather=%%b
 if %%a==Weather-url set Weather-url=%%b
 )
 
-
 echo.
 echo -----------------------------
 echo Checking Basewindow ...
@@ -37,25 +29,17 @@ tasklist /nh /fi "imagename eq i_view64.exe" | find /i "i_view64.exe" > nul || (
 timeout 5
 cd %appdata%\%APPNAME%
 
-
 echo.
 echo -----------------------------
 echo Checking Content Changes ...
 echo -----------------------------
 Robocopy.exe %ServerRootDir%\%ServerLayoutDirName% %LocalDir% /xf *.db /MIR /FFT /Z /XA:H /R:3 /W:5 > nul
 
-
-
-
 if "%Weather%"=="off" (goto sikipupdatehava) else (goto updatehava)
-
-
-
 
 :sikipupdatehava 
 
 goto countmedia
-
 
 :updatehava
 SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL %Weather-url% /Filename %LocalDir%\z_hava.png
@@ -64,9 +48,6 @@ SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL %Weather-url% /Filena
 SET cnt=0
 for %%A in (%LocalDir%\*) do set /a cnt+=1
 if "%cnt%"=="1" (goto singlefile) else (goto multifile)
-
-
-
 
 :singlefile
 echo.
@@ -91,7 +72,6 @@ goto get
 
 
 :multifile
-
 echo.
 echo -----------------------------
 echo Playing Now ...
