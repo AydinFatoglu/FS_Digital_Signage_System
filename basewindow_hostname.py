@@ -31,3 +31,4 @@ label1.config(bg="black")
 label1.place(relx = 0.0,
                  rely = 1.0,
                  anchor ='sw')
+master.mainloop()
