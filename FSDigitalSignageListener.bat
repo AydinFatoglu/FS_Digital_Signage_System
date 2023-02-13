@@ -17,13 +17,14 @@ xcopy %1\*.* %appdata%\%APPNAME%\ /I /D /S /Y > nul
 
 
 
-for /f "tokens=1,2,3,4,5,6 delims==" %%a in (%appdata%\%APPNAME%\ini\%2.ini) do (
+for /f "tokens=1,2,3,4,5,6,7 delims==" %%a in (%appdata%\%APPNAME%\ini\%2.ini) do (
 if %%a==ServerRootDir set ServerRootDir=%%b
 if %%a==LocalDir set LocalDir=%%b
 if %%a==ImageDuration set ImageDuration=%%b
 if %%a==Splash set Splash=%%b
 if %%a==ServerLayoutDirName set ServerLayoutDirName=%%b
-if %%a==Havadurumu set Havadurumu=%%b
+if %%a==Weather set Weather=%%b
+if %%a==Weather-url set Weather-url=%%b
 )
 
 
@@ -32,8 +33,8 @@ echo -----------------------------
 echo Checking Basewindow ...
 echo -----------------------------
 cd %appdata%\%APPNAME%\splash
-tasklist /nh /fi "imagename eq basewindow.exe" | find /i "basewindow.exe" > nul || (start "" basewindow.exe %Splash%)
-
+tasklist /nh /fi "imagename eq i_view64.exe" | find /i "i_view64.exe" > nul || (start "" i_view64.exe %Splash% /fs)
+timeout 5
 cd %appdata%\%APPNAME%
 
 
@@ -46,7 +47,7 @@ Robocopy.exe %ServerRootDir%\%ServerLayoutDirName% %LocalDir% /xf *.db /MIR /FFT
 
 
 
-if "%havadurumu%"=="off" (goto sikipupdatehava) else (goto updatehava)
+if "%Weather%"=="off" (goto sikipupdatehava) else (goto updatehava)
 
 
 
@@ -57,7 +58,7 @@ goto countmedia
 
 
 :updatehava
-SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL https://www.meteoblue.com/tr/meteotv/908ff2 /Filename %LocalDir%\z_hava.png
+SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL %Weather-url% /Filename %LocalDir%\z_hava.png
 
 :countmedia
 SET cnt=0
@@ -73,7 +74,7 @@ echo -----------------------------
 echo Playing Now ...
 echo -----------------------------
 timeout 3  > nul
-mpv.exe --fullscreen --image-display-duration=900 "%LocalDir%" > nul
+mpv.exe --mute --fullscreen --image-display-duration=900 "%LocalDir%" > nul
 
 
 SET "ServerRootDir="
@@ -82,7 +83,8 @@ SET "ImageDuration="
 SET "Splash="
 SET "ServerLayoutDirName="
 SET "cnt="
-SET "Havadurumu="
+SET "Weather="
+set "Weather-url="
 
 cls
 goto get
@@ -95,7 +97,7 @@ echo -----------------------------
 echo Playing Now ...
 echo -----------------------------
 ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t %ImageDuration% -q:a 9 -acodec libmp3lame Duration.mp3 2>NUL
-mpv.exe --fullscreen --audio-file=Duration.mp3 "%LocalDir%" > nul
+mpv.exe --mute --fullscreen --audio-file=Duration.mp3 "%LocalDir%" > nul
 
 
 
@@ -105,7 +107,8 @@ SET "ImageDuration="
 SET "Splash="
 SET "ServerLayoutDirName="
 SET "cnt="
-SET "Havadurumu="
+SET "Weather="
+set "Weather-url="
 
 cls
 goto get
