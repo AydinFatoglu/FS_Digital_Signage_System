@@ -17,7 +17,7 @@ if %%a==ImageDuration set ImageDuration=%%b
 if %%a==Splash set Splash=%%b
 if %%a==ServerLayoutDirName set ServerLayoutDirName=%%b
 if %%a==Weather set Weather=%%b
-if %%a==Weather-url set Weather-url=%%b
+if %%a==Weatherurl set Weatherurl=%%b
 )
 
 echo.
@@ -25,7 +25,7 @@ echo -----------------------------
 echo Checking Basewindow ...
 echo -----------------------------
 cd %appdata%\%APPNAME%\splash
-tasklist /nh /fi "imagename eq i_view64.exe" | find /i "i_view64.exe" > nul || (start "" i_view64.exe %Splash% /fs)
+tasklist /nh /fi "imagename eq basewindow.exe" | find /i "basewindow" > nul || (start "" basewindow.exe  %Splash%)
 timeout 5
 cd %appdata%\%APPNAME%
 
@@ -42,7 +42,7 @@ if "%Weather%"=="off" (goto sikipupdatehava) else (goto updatehava)
 goto countmedia
 
 :updatehava
-SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL %Weather-url% /Filename %LocalDir%\z_hava.png
+SiteShoter.exe /BrowserWidth 1920 /BrowserHeight 1080 /URL %Weatherurl% /Filename %LocalDir%\z_hava.png
 
 :countmedia
 SET cnt=0
@@ -65,7 +65,7 @@ SET "Splash="
 SET "ServerLayoutDirName="
 SET "cnt="
 SET "Weather="
-set "Weather-url="
+set "Weatherurl="
 
 cls
 goto get
@@ -77,8 +77,8 @@ echo -----------------------------
 echo Playing Now ...
 echo -----------------------------
 ffmpeg -y -f lavfi -i anullsrc=r=44100:cl=mono -t %ImageDuration% -q:a 9 -acodec libmp3lame Duration.mp3 2>NUL
-mpv.exe --mute --fullscreen --audio-file=Duration.mp3 "%LocalDir%" > nul
 
+mpv.exe --mute --fullscreen --audio-file=Duration.mp3 "%LocalDir%" > nul
 
 
 SET "ServerRootDir="
@@ -88,7 +88,7 @@ SET "Splash="
 SET "ServerLayoutDirName="
 SET "cnt="
 SET "Weather="
-set "Weather-url="
+set "Weatherurl="
 
 cls
 goto get
